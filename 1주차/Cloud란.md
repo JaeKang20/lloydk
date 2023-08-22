@@ -38,7 +38,9 @@ vim config 을 한 이후에
 인프라형 서비스 / 플램폼형 서비스 / 소프트웨어형 서비스
 <img src="../img/img_3.png" alt ="GCP" style="max-width:60%;">
 
-  ㅇ On-premis와 VM 차이점은 무엇인가?
+### On-premis와 VM 차이점은 무엇인가?
+온프레미스는 클라우드서비스를 이용하지 않고 사내전산실을 통해 직접 설치 이용\
+  VM은 가상머신으로 가상으로 된 환경에서 os를 설치하여 사용하는 방식
 
-- Private/Public Cloud 차이점은 무엇인가?\
+### Private/Public Cloud 차이점은 무엇인가?\
   ㅇ Cloud를 구성하기(만들기) 위해서는 어떻게 해야 하는가?
