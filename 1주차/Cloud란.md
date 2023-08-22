@@ -17,7 +17,7 @@ Azure
 aws의 경우 일단 윈도우에서 git bash를 다운받고 명령어를 이용하여
 mkdir ~/.ssh 폴더를 만든다.
 
-vim config 을 한 이후에
+vim config 파일을 만들고
 
   Host 서비스명\
     UserName (ec2의 탄력적 IP주소)\
@@ -42,6 +42,3 @@ vim config 을 한 이후에
 온프레미스는 클라우드서비스를 이용하지 않고 사내전산실을 통해 직접 설치 이용\
   VM은 가상머신으로 가상으로 된 환경에서 os를 설치하여 사용하는 방식
 
-### Private/Public Cloud 차이점은 무엇인가?\
-  ㅇ Cloud를 구성하기(만들기) 위해서는 어떻게 해야 하는가?
-  
