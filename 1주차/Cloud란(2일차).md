@@ -28,14 +28,14 @@ vim config 파일을 만들고
 
 `chmod 400 키페어.pem`
 
-`ssh -i "키페어.pem" 호스트네임@탄력적 주소` //EC2에서 Name바꾸는대로 나온다
+`ssh -i "키페어.pem" 호스트네임@탄력적 주소`
 로 작성해서 pem 권한 설정하고 ssh 호스트네임 입력해주면 끝
 
 [참고링크](https://dev-coco.tistory.com/107)
 
 ### IaaS/PaaS/SaaS란 무엇인가?
 
-인프라형 서비스 / 플램폼형 서비스 / 소프트웨어형 서비스
+인프라형 서비스 / 플랫폼형 서비스 / 소프트웨어형 서비스
 <img src="../img/img_3.png" alt ="GCP" style="max-width:60%;">
 
 ### On-premis와 VM 차이점은 무엇인가?
