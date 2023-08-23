@@ -28,7 +28,7 @@ vim config 파일을 만들고
 
 `chmod 400 키페어.pem`
 
-`ssh -i "키페어.pem" 호스트네임@탄력적 주소`
+`ssh -i "키페어.pem" 호스트네임@탄력적 주소` //EC2에서 Name바꾸는대로 나온다
 로 작성해서 pem 권한 설정하고 ssh 호스트네임 입력해주면 끝
 
 [참고링크](https://dev-coco.tistory.com/107)
