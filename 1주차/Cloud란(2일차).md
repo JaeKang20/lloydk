@@ -20,7 +20,7 @@ mkdir ~/.ssh 폴더를 만든다.
 vim config 파일을 만들고
 
   Host 서비스명\
-    UserName (ec2의 탄력적 IP주소)\
+    HostName (ec2의 탄력적 IP주소)\
     User 호스트 사용자명\
     IdentityFile ~/.ssh.키페어pem
 
