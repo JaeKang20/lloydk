@@ -43,6 +43,9 @@ IP: 주소를 가짐, 가독성이 떨어짐\
 TCP: 안전함 (hand shake)\
 DNS: 인간이 알아볼 수 있는 단어
 
+<img src="../../img/img_11.png" alt ="DNS" style="max-width:60%;">
+
+
 --------
 ### 2장 & 3장 간단한 프로토콜 HTTP
 
