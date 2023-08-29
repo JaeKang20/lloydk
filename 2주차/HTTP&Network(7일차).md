@@ -1,8 +1,13 @@
 ### 7일차
+(2023.8.29)
+
+> 이번 주 목표
+
+1. 담당 업무의 회사 생활에 필요한 전반적인 제반사항을 숙지하고 폭 넓은 대인관계를 위한 기틀을 마련
+2. 제품 전반에 대한 개념을 습득한다.
 
 #### 그림으로 배우는 HTTP & Network Basic
 [정리 링크](https://github.com/JaeKang20/lloydk/blob/main/2%EC%A3%BC%EC%B0%A8/HTTP%26Network/HTTP.md)
-
 
 
 --------------
