@@ -6,9 +6,23 @@
 1. 담당 업무의 회사 생활에 필요한 전반적인 제반사항을 숙지하고 폭 넓은 대인관계를 위한 기틀을 마련
 2. 제품 전반에 대한 개념을 습득한다.
 
-#### 그림으로 배우는 HTTP & Network Basic
-[정리 링크](https://github.com/JaeKang20/lloydk/blob/main/2%EC%A3%BC%EC%B0%A8/HTTP%26Network/HTTP.md)
 
+     2W 멘토링 진행 사항
+     인프라 / 네트워크 학습
+     기간 : 2023.09.01 까지
+     결과 : 2023.09.04 오후에 공유
+     Kafka 학습
+     기간 : 2023.09.22 까지
+     결과 : -
+     기타
+
+
+#### 그림으로 배우는 HTTP & Network Basic
+[최재강 정리 링크](https://github.com/JaeKang20/lloydk/blob/main/2%EC%A3%BC%EC%B0%A8/HTTP%26Network/HTTP.md)
+
+#### 인프라 엔지니어의 교과서 3장
+
+[조성훈님 정리](https://disco-cadmium-738.notion.site/Server-a5e1d00722cf4fb88dd14943202d765d)
 
 --------------
 
