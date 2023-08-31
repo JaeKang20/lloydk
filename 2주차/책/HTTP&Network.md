@@ -1,4 +1,8 @@
 ### 그림으로 배우는 HTTP & Network
+
+
+<img src="../../img/img_20.png" alt ="부제" style="max-width:20%;">
+
 부제: 대화가 필요해
 
 <img src="../../img/img_12.png" alt ="부제" style="max-width:80%;">
