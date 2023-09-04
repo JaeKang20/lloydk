@@ -31,7 +31,10 @@ SaaS는 Software as a Service의 줄임말로, 고객은 컴퓨터에 소프트�
 
 이 모델에서는 구독 방식(Subscription)으로 운영되어 라이선스가 부여됩니다.
 
+<img src="../img/img_25.png" alt ="GCP" style="max-width:50%;">\
+
+### 온프레미스 환경의 시스템을 클라우드 시스템 환경으로 전환을 검토할때 고려해야 할 점들을 기술
+
+시스템 클라우드는 보안이 취약한 부분이 있다고 합니다.
 
 
-
-  <img src="../img/img_25.png" alt ="GCP" style="max-width:50%;">\
