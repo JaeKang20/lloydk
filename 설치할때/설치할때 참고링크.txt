@@ -1,0 +1,17 @@
+파일 설치할 때
+
+[VMware]
+https://dear-sauce-d4e.notion.site/Vmware-centos-7-383912d791b34899aa4d9d782ab44998
+
+[mysql]
+https://dear-sauce-d4e.notion.site/mysql-e49ef2705c144d5b984fcded2d69de31
+
+[ec2]
+https://dev-coco.tistory.com/107
+
+[ELK 7]
+https://drive.google.com/file/d/1JedWLwCDlgu_dtgmWnMJZ2N8UwtEtiMh/view
+
+[Docker]
+https://drive.google.com/file/d/1Vy-_L3butIv0DNrwt6gM40aHJ4cnm13U/view
+
