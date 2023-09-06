@@ -23,15 +23,42 @@ R: 원본, 백업본 모두 없는 상태
 
 ## Task_설치해보기!
 
-| Window | zip      |
-|--------|----------|
-| Linux  | tar, rpm | 
+| Window(powershell로 설치 gitbash x) | zip      |
+|----------------------------------|----------|
+| Linux                            | tar, rpm | 
 
 6,7,8버전 (7,8,6순으로 하기를 추천)
 
-8 edge버전 보안 설정이 생겨서 에러가 많이 생김
+8 마지막 버전 보안 설정이 생겨서 에러가 많이 생김
 
-7점 중반버전 6점 중반 버전
+7점 (마지막버전, 중반버전) 6점 중반 버전
 
 ES -> kibana(비츠는 매트릭 비츠, 로그 스테시 설치(로그 확인해보기))
+
+[참고링크](https://docs.google.com/document/d/1Dz_TR1NGn4f1mpoP2JU2j6N5EdZeND8J5xfnpGUGKtA/edit)
+
+[참고링크2](https://velog.io/@yje876/ElasticSearch-CentOS7-ELK-Stack-%EC%84%A4%EC%B9%98)
+
+    
+## 01. Java설치
+[자바설치참고 링크](https://studying-penguin.tistory.com/2)
+
+02. home설정
+
+
+    which javac
+    /bin/javac
+    [root@localhost ~]# readlink -f /bin/javac
+    /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.382.b05-1.el7_9.x86_64/bin/javac
+    이거를 JAVA_HOME 설정 하고 싶어
+
+
+> export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.382.b05-1.el7_9.x86_64
+
+## 03. ElasticSearch 설치
+ [ElasticSearch설치참고 링크]()
+
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.2-linux-x86_64.tar.gz
+
+tar -xzf elasticsearch-7.5.2-linux-x86_64.tar.g
 

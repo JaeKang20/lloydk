@@ -1,4 +1,4 @@
-    Systemctl 명령어를 통해 리눅스를 킬때마다 zookeeper, kafka를 사용gksms qjq
+    Systemctl 명령어를 통해 리눅스를 킬때마다 zookeeper, kafka를 사용하는 법
 
 
 리눅스에서 시스템을 부팅할 때마다 ZooKeeper와 Kafka를 자동으로 실행하려면 `systemctl`을 사용하여 서비스 유닛을 생성해야 합니다. 이것은 시스템 부팅 시에 자동으로 시작되도록 구성할 수 있습니다.
