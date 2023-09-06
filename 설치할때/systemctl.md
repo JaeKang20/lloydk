@@ -10,7 +10,7 @@
    먼저, ZooKeeper를 위한 서비스 유닛을 작성합니다. 서비스 유닛 파일은 보통 `/etc/systemd/system/` 디렉토리에 저장됩니다.
 
    ```bash
-   sudo nano /etc/systemd/system/zookeeper.service
+   sudo vi /etc/systemd/system/zookeeper.service
    ```
 
    그리고 아래와 같이 파일 내용을 작성합니다. 파일 이름은 `zookeeper.service`로 저장되어야 합니다.
