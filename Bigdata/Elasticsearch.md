@@ -60,5 +60,5 @@ ES -> kibana(비츠는 매트릭 비츠, 로그 스테시 설치(로그 확인�
 
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.2-linux-x86_64.tar.gz
 
-tar -xzf elasticsearch-7.5.2-linux-x86_64.tar.g
+tar -xzf elasticsearch-7.5.2-linux-x86_64.tar.gz
 
