@@ -1,5 +1,19 @@
 파일 설치할 때
 
+
+[jdk 설치시에 JAVA_HOME 출력 명령어 vi /etc/profile 끝 쪽으로 넣을 때]
+
+[자바8 설치]
+1. yum install -y java-1.8.0-openjdk-devel.x86_64
+2. $ which javac
+    => /bin/javac
+3. readlink -f /bin/javac
+    => /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.382.b05-1.el7_9.x86_64/bin/javac
+4. vi /etc/profile
+    => 끝 줄 export JAVA_HOME=(위에꺼)
+5. source /etc/profile //저장
+
+/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.382.b05-1.el7_9.x86_64  > /etc/profile 머 이런식으로 하면 된다.
 [VMware]
 https://dear-sauce-d4e.notion.site/Vmware-centos-7-383912d791b34899aa4d9d782ab44998
 
@@ -15,3 +29,37 @@ https://drive.google.com/file/d/1JedWLwCDlgu_dtgmWnMJZ2N8UwtEtiMh/view
 [Docker]
 https://drive.google.com/file/d/1Vy-_L3butIv0DNrwt6gM40aHJ4cnm13U/view
 
+[kafka]
+https://docs.google.com/presentation/d/1meLVYJni05GItIjBIiaRpBBoFELvOJ4H/edit
+
+[자바 환경변수]
+https://veneas.tistory.com/entry/Linux-CentOS7-%EC%9B%90%ED%95%98%EB%8A%94-%ED%8A%B9%EC%A0%95-%EB%B2%84%EC%A0%84-Javajdk-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-wget
+
+[jdk][config파일][elastic][kibana]
+
+[elasticsearch 획득 명령어]
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.2-linux-x86_64.tar.gz //8.2.2 8.9.2 다 됩니다.
+
+[kibana]
+wget https://artifacts.elastic.co/downloads/kibana/kibana-7.5.2-linux-x86_64.tar.gz
+버전에 맞게!
+
+[log-stash] 6.8.23이 6점대 마지막!
+wget https://artifacts.elastic.co/downloads/logstash/logstash-6.8.23.tar.gz
+
+[metricbeat]
+https://www.elastic.co/kr/downloads/past-releases/metricbeat-7-5-2 // 버전에 맞게 하면 됩니다.
+
+rwxr-xr-x. 10 harry harry       167 Sep  7 22:44 elasticsearch-8.9.2
+-rw-rw-r--.  1 harry harry 605744267 Sep  6 12:28 elasticsearch-8.9.2-linux-x86_64.tar.gz
+-rw-------.  1 harry harry        16 Sep  7 01:10 .esd_auth
+-rw-------.  1 harry harry       310 Sep  7 01:10 .ICEauthority
+drwxrwxr-x. 12 harry harry       238 Sep  7 22:53 kibana-8.9.2
+-rw-rw-r--.  1 harry harry 294424283 Sep  6 12:44 kibana-8.9.2-linux-x86_64.tar.gz
+drwx------.  3 harry harry        19 Sep  7 01:10 .local
+drwxrwxr-x. 14 harry harry      4096 Sep  7 23:37 logstash-8.9.2
+-rw-rw-r--.  1 harry harry 346522558 Sep  6 12:49 logstash-8.9.2-linux-x86_64.tar.gz
+drwxrwxr-x.  6 harry harry       230 Sep  7 23:43 metricbeat-8.9.2-linux-x86_64
+-rw-rw-r--.  1 harry harry  50996989 Sep  6 12:22 metricbeat-8.9.2-linux-x86_64.tar.gz
+
+8.9.2 버전 전부 설치 시 ls -la 명령어 출력결과
