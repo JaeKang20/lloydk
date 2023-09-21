@@ -1,0 +1,74 @@
+겹치는 컬럼
+NAD_USER10 > NAD_DEV_ACCT  겹치는 컬럼 AUTH
+NAD_DEV10 > NAD_DEV_ACCT 겹치는 컬럼 MNG_NUM
+NAD_DEV_ACCT > NAD_DEV_ACCT_AUTH30 겹치는 컬럼 ACCT_NUM
+
+----------------------------------
+1) [정보: 테이블명 > 슈퍼키]
+사용자 정보: NAD_USER10 > NAD_USER10
+장비 정보: NAD_DEV10 > MNG_NUM
+계정 정보: NAD_DEV_ACCT > ACCT_NUM  
+권한 정보: NAD_DEV_ACCT_AUTH30 > ACCT_NUM, USER_ID, AUTH_LEVEL, SU_AUTH_YN
+
+
+[컬럼] 
+NAD_USER10.USER_ID(사용자ID),
+NAD_USER10.USER_NM(사용자명),
+NAD_DEV10.DEV_IP(장비IP),
+NAD_DEV_ACCT.ID(계정ID),
+NAD_DEV_ACCT_AUTH30.START_DATE(권한시작일),
+NAD_DEV_ACCT_AUTH30.END_DATE(권한 종료일)
+
+
+2) 조회 조건: root,sysadm 계정 사용 기한이 2018.11.01이후까지 있는 사용자 계정 권한 리스트
+
+위 테이블 구조를 파악하고 키 값과 연결해서 정보를 추출해주세요.
+SELECT
+	a.user_id,
+	a.user_nm,
+c.dev_ip,
+c.dev_nm,
+b.id,
+	d.start_date,
+	d.end_date
+FROM
+	nad_user10 a,
+	nad_dev_acct b,
+	nad_dev10 c,
+	nad_dev_acct_auth30 d
+WHERE
+	a.user_id = d.USER_ID
+	AND b.acct_num = d.acct_num
+	AND b.mng_num = c.mng_num
+	AND b.id IN ('root', 'sysamd')
+	AND d.end_date >= '2018-11-02'
+--------------------------------
+2번 과제
+
+SELECT
+	a.user_id,
+	a.user_nm, 
+c.dev_ip,
+c.dev_nm,
+b.id,
+	d.start_date,
+	d.end_date
+FROM
+	nad_user10 a,
+	nad_dev_acct b,
+	nad_dev10 c,
+	nad_dev_acct_auth30 d
+WHERE
+	a.user_id = d.USER_ID
+	AND b.acct_num = d.acct_num
+	AND b.mng_num = c.mng_num
+	AND b.id IN ('root', 'sysamd')
+	AND d.end_date >= '2018-11-02'
+	
+GROUP BY
+	c.dev_ip, c.dev_nm, b.id
+ORDER BY
+	c.dev_ip, c.dev_nm, b.id;
+
+----------------------------------
+
