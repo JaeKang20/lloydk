@@ -167,7 +167,7 @@ server.host: "0.0.0.0"
 
 
 # This section was automatically generated during setup.
-elasticsearch.hosts: ['https://192.168.219.114:9200']
+elasticsearch.hosts: ['https://192.168..:9200']
 elasticsearch.serviceAccountToken: AAEAAWVsYXN0aWMva2liYW5hL2Vucm9sbC1wcm9jZXNzLXRva2VuLTE2OTU3OTE0NjU3MzE6b0VLMkZDRDlTTDY5UDNoWlBqajNnZw
 elasticsearch.ssl.certificateAuthorities: [/home/harry/kibana-8.10.2/data/ca_1695791466163.crt]
 xpack.fleet.outputs: [{id: fleet-default-output, name: default, is_default: true, is_default_monitoring: true, type: elasticsearch, hosts: ['https://192.168.219.114:9200'], ca_trusted_fingerprint: 82ec9efa6f7a4be13a5659be7014f4ad628395e1e0fc427a4eb54778f42ce5fb}]
