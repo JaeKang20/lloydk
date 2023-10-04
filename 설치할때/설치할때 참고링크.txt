@@ -86,6 +86,9 @@ https://drive.google.com/file/d/1Vy-_L3butIv0DNrwt6gM40aHJ4cnm13U/view
 [kafka]
 https://docs.google.com/presentation/d/1meLVYJni05GItIjBIiaRpBBoFELvOJ4H/edit
 
+다운로드 wget https://apache.mirror.cdnetworks.com/kafka/3.5.0/kafka_2.12-3.5.0.tgz
+
+
 [자바 환경변수]
 https://veneas.tistory.com/entry/Linux-CentOS7-%EC%9B%90%ED%95%98%EB%8A%94-%ED%8A%B9%EC%A0%95-%EB%B2%84%EC%A0%84-Javajdk-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-wget
 
@@ -93,3 +96,4 @@ https://veneas.tistory.com/entry/Linux-CentOS7-%EC%9B%90%ED%95%98%EB%8A%94-%ED%8
 https://www.elastic.co/kr/downloads/past-releases/metricbeat-7-5-2 // 버전에 맞게 하면 됩니다.
 
 wget http://repo.mysql.com/mysql57-community-release-el7-11.noarch.rpm
+
