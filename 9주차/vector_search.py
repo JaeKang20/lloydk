@@ -20,7 +20,7 @@ def connect_es():
     return client
 
 def connect_mongo():
-    client = MongoClient(" mongodb+srv://mongo:mongo@cluster0.x2zqb.mongodb.net/?retryWrites=true&w=majority")
+    client = MongoClient(" mongodb+srv:/")
     db = client.lloydk
     return db
 
