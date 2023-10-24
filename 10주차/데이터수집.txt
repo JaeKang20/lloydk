@@ -1,0 +1,29 @@
+https://www.notion.so/7-vs-vs-6ce4a85f18da4a8bbc8df6cdc79f9356?p=274c8effe21445a4b0c66d8678783d05&pm=s
+
+전체 적재시 - out of memory 에러?
+
+    input {
+      elasticsearch {
+        hosts => ["https://localhost:9200"]
+        user => ""
+        password => ""
+        ssl_certificate_authorities => "/home/elastic/elasticsearch-8.10.3/config/certs/http_ca.crt"
+        ssl_certificate_verification => true
+        index => "naver_news_ada_taaco"
+        query => '{ "query": { "match_all": {} } }'
+
+        #너무 큰 사이즈의 데이터를 한번에 가져오기 때문에 error -> Scroll API 사용, 여러 작은 배치로 분할하여 가져옴
+        size => 50 #100개 했더니 약 2G 들어갔을 때 메모리 범람 에러나서 변경
+        scroll => "5m"
+      }
+    }
+
+    output {
+      stdout { codec => dots }
+      elasticsearch {
+        cloud_id => ""
+        cloud_auth => ""
+        index => "naver_news_ada_taaco"
+      }
+    }
+
