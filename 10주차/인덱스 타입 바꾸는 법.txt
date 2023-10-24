@@ -1,0 +1,263 @@
+Elasticsearch 인덱스 type 바꾸기
+
+## - 새로운 index mapping, setting 정의하기
+
+       ```jsx
+       PUT cloud_naver_news/
+       {
+       "mappings": {
+       "properties": {
+       "@timestamp": {
+       "type": "date"
+       },
+       "content": {
+       "type": "text",
+       "fields": {
+       "std": {
+       "type": "text",
+       "analyzer": "std_analyzer"
+       }
+       }
+       },
+       "content_vector_taaco": {
+       "type": "dense_vector",
+       "dims": 768,
+       "index": true,
+       "similarity": "cosine"
+       },
+       "content_vector_ada": {
+       "type": "dense_vector",
+       "dims": 1536,
+       "index": true,
+       "similarity": "cosine"
+       },
+       "date": {
+       "type": "date"
+       },
+       "journalists": {
+       "type": "text",
+       "fields": {
+       "keyword": {
+       "type": "keyword",
+       "ignore_above": 256
+       }
+       }
+       },
+       "kr-sentiment-probability": {
+       "type": "double"
+       },
+       "kr-sentiment-result": {
+       "type": "keyword"
+       },
+       "main_category": {
+       "type": "text",
+       "fields": {
+       "keyword": {
+       "type": "keyword",
+       "ignore_above": 256
+       }
+       }
+       },
+       "middle_category": {
+       "type": "text",
+       "fields": {
+       "keyword": {
+       "type": "keyword",
+       "ignore_above": 256
+       }
+       }
+       },
+       "press": {
+       "type": "text",
+       "fields": {
+       "keyword": {
+       "type": "keyword",
+       "ignore_above": 256
+       },
+       "ngram": {
+       "type": "text",
+       "analyzer": "ngram_analyzer"
+       },
+       "std": {
+       "type": "text",
+       "analyzer": "std_analyzer"
+       }
+       }
+       },
+       "summary": {
+       "type": "text",
+       "fields": {
+       "keyword": {
+       "type": "keyword",
+       "ignore_above": 256
+       }
+       }
+       },
+       "title": {
+       "type": "text",
+       "fields": {
+       "keyword": {
+       "type": "keyword",
+       "ignore_above": 256
+       },
+       "ngram": {
+       "type": "text",
+       "analyzer": "ngram_analyzer"
+       },
+       "std": {
+       "type": "text",
+       "analyzer": "std_analyzer"
+       }
+       }
+       },
+       "title_vector_taaco": {
+       "type": "dense_vector",
+       "dims": 768,
+       "index": true,
+       "similarity": "cosine"
+       },
+       "title_vector_ada": {
+       "type": "dense_vector",
+       "dims": 1536,
+       "index": true,
+       "similarity": "cosine"
+       },
+       "title_with_content": {
+       "type": "text"
+       },
+       "title_with_content_vector_taaco": {
+       "type": "dense_vector",
+       "dims": 768,
+       "index": true,
+       "similarity": "cosine"
+       },
+       "title_with_content_vector_ada": {
+       "type": "dense_vector",
+       "dims": 1536,
+       "index": true,
+       "similarity": "cosine"
+       },
+       "url": {
+       "type": "text",
+       "fields": {
+       "keyword": {
+       "type": "keyword",
+       "ignore_above": 256
+       }
+       }
+       },
+       "utc_date": {
+       "type": "date"
+       }
+       }
+       },
+       "settings": {
+       "index": {
+       "max_ngram_diff": "9",
+       "routing": {
+       "allocation": {
+       "include": {
+       "_tier_preference": "data_content"
+       }
+       }
+       },
+       "number_of_shards": "1",
+       "analysis": {
+       "analyzer": {
+       "std_analyzer": {
+       "filter": [
+       "lowercase",
+       "trim"
+       ],
+       "type": "custom",
+       "tokenizer": "standard"
+       },
+       "ngram_analyzer": {
+       "filter": [
+       "lowercase",
+       "trim"
+       ],
+       "type": "custom",
+       "tokenizer": "ngram_tokenizer"
+       }
+       },
+       "tokenizer": {
+       "ngram_tokenizer": {
+       "token_chars": [
+       "letter",
+       "digit",
+       "whitespace"
+       ],
+       "min_gram": "2",
+       "type": "ngram",
+       "max_gram": "10"
+       }
+       }
+       },
+       "number_of_replicas": "1"
+       }
+       }
+       }
+       ```
+
+## - 데이터 복사 및 type 변경을 위해서 ingest pipeline 설정
+
+    ```jsx
+    # processor 정의 - ingest pipeline 생성하기로 지정 및 생성이 가능하다
+    [
+      {
+        "set": {
+          "field": "content_vector_taaco",
+          "copy_from": "content_vector_taaco"
+        }
+      },
+      {
+        "set": {
+          "field": "content_vector_ada",
+          "copy_from": "content_vector_ada"
+        }
+      },
+      {
+        "set": {
+          "field": "title_vector_taaco",
+          "copy_from": "title_vector_taaco"
+        }
+      },
+      {
+        "set": {
+          "field": "title_vector_ada",
+          "copy_from": "title_vector_ada"
+        }
+      },
+      {
+        "set": {
+          "field": "title_with_content_vector_taaco",
+          "copy_from": "title_with_content_vector_taaco"
+        }
+      },
+      {
+        "set": {
+          "field": "title_with_content_vector_ada",
+          "copy_from": "title_with_content_vector_ada"
+        }
+      }
+    ]
+    ```
+## - ingest pipeline를 통해서 reindexing 진행
+
+    ```jsx
+    POST _reindex?wait_for_completion=false
+    {
+    "source": {
+    "index": "naver_news_ada_taaco"
+    },
+    "dest": {
+    "index": "cloud_naver_news",
+    "pipeline": "float_to_dense_vector"
+    }
+    }
+    ```
+
+    ```jsx
+    GET _tasks/xaMqRtTEQJ-gA2mX-5yFQQ:49557
+    ```
