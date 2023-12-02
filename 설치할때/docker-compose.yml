@@ -1,79 +1,114 @@
 version: '3.7'
 
 services:
-  elasticsearch:
-    build:
-      context: elasticsearch/
-      args:
-        ELK_VERSION: $ELK_VERSION
-    volumes:
-      - type: bind
-        source: ./elasticsearch/config/elasticsearch.yml
-        target: /usr/share/elasticsearch/config/elasticsearch.yml
-        read_only: true
-      - type: volume
-        source: elasticsearch
-        target: /usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: es01
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      discovery.type: single-node
-    networks:
-      elk:
-        ipv4_address: 192.x.x.x
-
-  logstash:
-    build:
-      context: logstash/
-      args:
-        ELK_VERSION: $ELK_VERSION
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - type: bind
-        source: ./logstash/config/logstash.yml
-        target: /usr/share/logstash/config/logstash.yml
-        read_only: true
-      - type: bind
-        source: ./logstash/pipeline
-        target: /usr/share/logstash/pipeline
-        read_only: true
+      - data01:/usr/share/elasticsearch/data
+      - config01:/usr/share/elasticsearch/config
     ports:
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
-      - "9600:9600"
+      - 9200:9200
+    networks:
+      elastic:
+        ipv4_address: 192.x.x.2
+
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: es02
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-
-  kibana:
-    build:
-      context: kibana/
-      args:
-        ELK_VERSION: $ELK_VERSION
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - type: bind
-        source: ./kibana/config/kibana.yml
-        target: /usr/share/kibana/config/kibana.yml
-        read_only: true
+      - data02:/usr/share/elasticsearch/data
+      - config02:/usr/share/elasticsearch/config
     ports:
-      - "5601:5601"
+      - 9201:9201
     networks:
-      - elk
-    depends_on:
-      - elasticsearch
+      elastic:
+        ipv4_address: 192.x.x.3
+
+  es03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data03:/usr/share/elasticsearch/data
+      - config03:/usr/share/elasticsearch/config
+    ports:
+      - 9202:9202
+    networks:
+      elastic:
+        ipv4_address: 192.x.x.4
+
+  kibana01:
+    image: docker.elastic.co/kibana/kibana:8.8.0
+    container_name: kibana01
+    networks:
+     - elastic      
+    volumes:
+      - kibanadata:/usr/share/kibana/data
+    ports:
+      - 5601:5601
+    environment:
+      - SERVERNAME=kibana
+      - SERVER_PUBLICBASEURL=http://192.x.x.x:5601
+      - ELASTICSEARCH_HOSTS=http://es01:9200
+    mem_limit: 1073741824
+
+
+volumes:
+  data01:
+    driver: local
+  data02:
+    driver: local
+  data03:
+    driver: local
+  kibanadata:
+    driver: local
+  config01:  # Add this volume definition
+    driver: local
+  config02:  # Add this volume definition
+    driver: local
+  config03:  # Add this volume definition
+    driver: local
 
 networks:
-  elk:
+  elastic:
     driver: bridge
     ipam:
       config:
         - subnet: 192.x.x.0/24
           gateway: 192.x.x.1
-
-volumes:
-  elasticsearch:
-  log-volume:
