@@ -16,11 +16,7 @@ fake = Faker()
 
 # 필드 목록
 menu_fields = [
-    'std_zuk_fs_mnu_nm', 'std_rice_fs_mnu_nm', 'std_soup2_fs_mnu_nm', 'std_ilpum1_fs_mnu_nm',
-    'std_buchan1_fs_mnu_nm', 'std_soup3_fs_mnu_nm', 'std_ilpum2_fs_mnu_nm', 'std_juchan3_fs_mnu_nm',
-    'std_soup4_fs_mnu_nm', 'std_juchan1_fs_mnu_nm', 'std_kimchi_fs_mnu_nm', 'std_juchan2_fs_mnu_nm',
-    'std_bread_fs_mnu_nm', 'std_soup5_fs_mnu_nm', 'std_buchan2_fs_mnu_nm', 'std_soup1_fs_mnu_nm',
-    'std_buchan3_fs_mnu_nm', 'std_instant_fs_mnu_nm', 'std_bojochan_fs_mnu_nm'
+#원하는 필드만 
 ]
 
 # 각 메뉴명에 대한 난수 매핑 딕셔너리
