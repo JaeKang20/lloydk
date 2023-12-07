@@ -1,0 +1,51 @@
+from elasticsearch import Elasticsearch
+from faker import Faker
+
+# Elasticsearch 연결 설정
+es = Elasticsearch(['https://xxx.xxx.xxx.xxx:9200'],
+                   http_auth=('xxxxxx', 'xxxxxx'),
+                   timeout=60,
+                   verify_certs=False)  # SSL 검증 무시
+
+# 인덱스 이름 설정
+source_index = 'ml_basic10'
+dest_index = 'ml_basic11'
+
+# 난수 생성을 위한 가짜 데이터 생성기
+fake = Faker()
+
+# 필드 목록
+menu_fields = [
+    'std_zuk_fs_mnu_nm', 'std_rice_fs_mnu_nm', 'std_soup2_fs_mnu_nm', 'std_ilpum1_fs_mnu_nm',
+    'std_buchan1_fs_mnu_nm', 'std_soup3_fs_mnu_nm', 'std_ilpum2_fs_mnu_nm', 'std_juchan3_fs_mnu_nm',
+    'std_soup4_fs_mnu_nm', 'std_juchan1_fs_mnu_nm', 'std_kimchi_fs_mnu_nm', 'std_juchan2_fs_mnu_nm',
+    'std_bread_fs_mnu_nm', 'std_soup5_fs_mnu_nm', 'std_buchan2_fs_mnu_nm', 'std_soup1_fs_mnu_nm',
+    'std_buchan3_fs_mnu_nm', 'std_instant_fs_mnu_nm', 'std_bojochan_fs_mnu_nm'
+]
+
+# 각 메뉴명에 대한 난수 매핑 딕셔너리
+menu_random_mapping = {}
+
+# Elasticsearch에서 데이터 가져오기
+search_result = es.search(index=source_index)
+
+# 새로운 인덱스에 데이터 색인
+for hit in search_result['hits']['hits']:
+    source_document = hit['_source']
+
+    # 각 메뉴명에 대해 새로운 난수 생성 또는 이미 생성된 난수 사용
+    for field in menu_fields:
+        new_field = f"{field}_num"
+        
+        if field not in menu_random_mapping:
+            menu_random_mapping[field] = fake.random_number(digits=5)
+        
+        if new_field not in source_document:
+            source_document[new_field] = menu_random_mapping[field]
+
+    try:
+        # ml_basic3 인덱스에 데이터 색인
+        es.index(index=dest_index, body=source_document)
+        print(f"Document successfully indexed into {dest_index}: {source_document}")
+    except Exception as e:
+        print(f"Error indexing document into {dest_index}: {e}")
