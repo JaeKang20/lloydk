@@ -7,6 +7,32 @@ es = Elasticsearch(['https://xxx.xxx.xxx.xxx:9200'],
                    timeout=60,
                    verify_certs=False)  # SSL 검증 무시
 
+def connect_es(strAddr, strCertPath, strID, strPW):
+    # Client Instance 생성
+    client = Elasticsearch(
+        [strAddr],  # Elasticsearch URL 입력
+        ca_certs=strCertPath,  # Elasticsearch http_ca.crt Local Path
+        basic_auth=(strID, strPW),  # Elasticsearch ID & Password 입력
+    )
+    return client
+
+def check_es_state(client):
+    # Client 상태 확인(State Check)
+    if client.ping():
+        print("Connection Success!")
+        return True
+    else:
+        print("Connection Fail!")
+        return False
+
+# 연결 시도
+es_client = connect_es(strAddr, strCertPath, strID, strPW)
+
+# 상태 확인
+if es_client:
+    if check_es_state(es_client):
+        time.sleep(2)  # 2초 대기
+
 # 인덱스 이름 설정
 source_index = 'ml_basic10'
 dest_index = 'ml_basic11'
@@ -16,32 +42,47 @@ fake = Faker()
 
 # 필드 목록
 menu_fields = [
-#원하는 필드만 
+    #추출할 데이터
 ]
 
 # 각 메뉴명에 대한 난수 매핑 딕셔너리
 menu_random_mapping = {}
 
-# Elasticsearch에서 데이터 가져오기
-search_result = es.search(index=source_index)
+# Scroll을 사용하여 모든 데이터 가져오기
+scroll_size = 1000
+search_result = es_client.search(index=source_index, scroll='2m', size=scroll_size)
 
 # 새로운 인덱스에 데이터 색인
-for hit in search_result['hits']['hits']:
-    source_document = hit['_source']
+while len(search_result['hits']['hits']) > 0:
+    for hit in search_result['hits']['hits']:
+        source_document = hit['_source']
 
-    # 각 메뉴명에 대해 새로운 난수 생성 또는 이미 생성된 난수 사용
-    for field in menu_fields:
-        new_field = f"{field}_num"
-        
-        if field not in menu_random_mapping:
-            menu_random_mapping[field] = fake.random_number(digits=5)
-        
-        if new_field not in source_document:
-            source_document[new_field] = menu_random_mapping[field]
+        # 각 메뉴명에 대해 새로운 난수 생성 또는 이미 생성된 난수 사용
+        for field in menu_fields:
+            new_field = f"{field}_num"
 
-    try:
-        # ml_basic3 인덱스에 데이터 색인
-        es.index(index=dest_index, body=source_document)
-        print(f"Document successfully indexed into {dest_index}: {source_document}")
-    except Exception as e:
-        print(f"Error indexing document into {dest_index}: {e}")
+            if field not in menu_random_mapping:
+                menu_random_mapping[field] = fake.random_number(digits=5)
+
+            # 기존 값이 null이면 null로 유지, 그렇지 않으면 새로운 난수 할당
+            if source_document[field] is None:
+                source_document[new_field] = None
+            elif new_field not in source_document:
+                source_document[new_field] = menu_random_mapping[field]
+
+        try:
+            # ml_basic11 인덱스에 데이터 색인
+            es_client.index(index=dest_index, body=source_document)
+            print(f"Document successfully indexed into {dest_index}: {source_document}")
+        except Exception as e:
+            print(f"Error indexing document into {dest_index}: {e}")
+
+    # Scroll API를 사용하여 추가 문서 가져오기
+    search_result = es_client.scroll(scroll_id=search_result['_scroll_id'], scroll='2m')
+
+# 디버깅용: ml_basic11 인덱스 매핑 확인
+print(f"Index mapping for {dest_index}: {es_client.indices.get_mapping(index=dest_index)}")
+
+# 디버깅용: ml_basic10 인덱스에서 일부 데이터 확인
+sample_data = es_client.search(index=source_index, size=5)
+print(f"Sample data from {source_index}: {sample_data}")
